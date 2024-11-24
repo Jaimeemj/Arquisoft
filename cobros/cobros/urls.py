@@ -6,4 +6,4 @@ urlpatterns = [
     path('cobros/', views.lista_cobros, name='lista_cobros'),
     path('suma/', views.obtener_suma_total, name='obtener_suma_total'),  # Nueva ruta
 ]
-]
+
