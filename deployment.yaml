@@ -274,7 +274,7 @@ resources:
           sudo python3 manage.py makemigrations
           sudo python3 manage.py migrate
 
- - name: msd-main-page
+- name: msd-main-page
   type: compute.v1.instance
   properties:
     zone: us-central1-a
