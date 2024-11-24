@@ -72,7 +72,7 @@ resources:
           #!/bin/bash
           sudo mkdir /home/labs
           cd /home/labs
-          sudo git clone https://github.com/Camilafajardo22/Arquisoft.git
+          sudo git clone https://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@github.com/Camilafajardo22/Arquisoft.git
           cd ISIS2503-Microservices-AppDjango
           docker network create kong-net
           docker run -d --name kong --network=kong-net --restart=always \
@@ -168,7 +168,7 @@ resources:
           sudo apt-get install python3-pip -y
           sudo mkdir /home/proyecto
           cd /home/proyecto
-          sudo git clone https://github.com/Camilafajardo22/Arquisoft.git
+          sudo git clone https://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@github.com/Camilafajardo22/Arquisoft.git
           cd Arquisoft/calculos
           pip3 install -r requirements.txt
           python3 app.py
@@ -204,7 +204,7 @@ resources:
           sudo apt-get install python3-pip -y
           sudo mkdir /home/proyecto
           cd /home/proyecto
-          sudo git clone https://github.com/Camilafajardo22/Arquisoft.git
+          sudo git clone https://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@github.com/Camilafajardo22/Arquisoft.git
           cd Arquisoft/empleados
           pip3 install -r requirements.txt
           python3 app.py
@@ -237,7 +237,7 @@ resources:
           #!/bin/bash
           sudo mkdir /home/proyecto
           cd /home/proyecto
-          sudo git clone https://github.com/Camilafajardo22/Arquisoft.git
+          sudo git clone https://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@github.com/Camilafajardo22/Arquisoft.git
           cd Arquisoft/cobros
 
 - name: msd-estudiantes-ms
@@ -268,7 +268,7 @@ resources:
           #!/bin/bash
           sudo mkdir /home/proyecto
           cd /home/proyecto
-          sudo git clone https://github.com/Camilafajardo22/Arquisoft.git
+          sudo git clone https://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@github.com/Camilafajardo22/Arquisoft.git
           cd Arquisoft/estudiantes
           sudo pip3 install -r requirements.txt
           sudo python3 manage.py makemigrations
@@ -305,7 +305,7 @@ resources:
           sudo apt-get install virtualenv -y
           sudo mkdir /home/main_page
           cd /home/main_page
-          sudo git clone https://github.com/Camilafajardo22/Arquisoft.git
+          sudo git clone https://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@github.com/Camilafajardo22/Arquisoft.git
           cd Arquisoft/pagina_principal
           virtualenv env
           source env/bin/activate
