@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Empleados</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Lista de Empleados</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Cargo</th>
+            </tr>
+        </thead>
+        <tbody id="empleados-lista">
+            <!-- Aquí se llenarán los datos dinámicamente -->
+        </tbody>
+    </table>
+
+    <script>
+        // URL del microservicio de empleados
+        const urlEmpleados = 'http://10.128.0.85:8080/employees';
+
+        // Función para cargar la lista de empleados
+        function cargarEmpleados() {
+            fetch(urlEmpleados)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error al obtener la lista de empleados');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const tbody = document.getElementById('empleados-lista');
+                    tbody.innerHTML = ''; // Limpiar la tabla antes de llenarla
+                    data.forEach(empleado => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${empleado.id}</td>
+                            <td>${empleado.nombre}</td>
+                            <td>${empleado.cargo}</td>
+                        `;
+                        tbody.appendChild(row);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+        // Cargar la lista de empleados al cargar la página
+        window.onload = cargarEmpleados;
+    </script>
+
+</body>
+</html>

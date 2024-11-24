@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cobros de {{ estudiante.nombre }}</title>
+</head>
+<body>
+    <h1>Cobros de {{ estudiante.nombre }}</h1>
+    <ul>
+        {% if cobros %}
+            {% for cobro in cobros %}
+                <li>
+                    Fecha: {{ cobro.fecha }} | Monto: {{ cobro.monto }} | Pagado: {{ cobro.pagado }}
+                </li>
+            {% endfor %}
+        {% else %}
+            <li>No hay cobros para este estudiante.</li>
+        {% endif %}
+    </ul>
+
+    <a href="{% url 'estudiantes_list' %}">Volver a la lista de estudiantes</a>
+</body>
+</html>

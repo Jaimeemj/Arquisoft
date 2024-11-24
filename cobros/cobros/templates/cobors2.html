@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Cobros por Estudiante</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+    </style>
+    <script>
+        function fetchSumaTotal() {
+            fetch('/suma/')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.suma_total !== undefined) {
+                        alert(`La suma total de todos los cobros es: ${data.suma_total}`);
+                    } else {
+                        alert('Error al obtener la suma total.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('No se pudo conectar con el servidor.');
+                });
+        }
+    </script>
+</head>
+<body>
+
+    <h1>Lista de Cobros por Estudiante</h1>
+
+    {% for entry in estudiantes_con_cobros %}
+    <h2>{{ entry.estudiante.nombre }}</h2>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Monto</th>
+                <th>Pagado</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cobro in entry.cobros %}
+            <tr>
+                <td>{{ cobro.fecha }}</td>
+                <td>{{ cobro.monto }}</td>
+                <td>{% if cobro.pagado %}Sí{% else %}No{% endif %}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3">No hay cobros disponibles.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <br><br>
+    {% endfor %}
+
+    <!-- Botón para mostrar la suma total -->
+    <button onclick="fetchSumaTotal()">Mostrar Suma Total</button>
+
+</body>
+</html>
