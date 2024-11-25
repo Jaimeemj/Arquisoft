@@ -46,7 +46,7 @@ resources:
 - name: nosqld-firewall-mongo
   type: compute.v1.firewall
   properties:
-    network: https://www.googleapis.com/compute/v1/projects/<id-proyecto>/global/networks/default
+    network: https://www.googleapis.com/compute/v1/projects/sprint4-442722/global/networks/default
     priority: 1000
     direction: INGRESS
     sourceTags: 
