@@ -36,3 +36,14 @@ services:
       - name: calculos-route
         paths:
           - "/calculos"
+
+upstreams:
+  - name: estudiantes_upstream
+    targets:
+      - target: 10.128.0.87:8080
+        weight: 100
+
+  - name: cobros_upstream
+    targets:
+      - target: 10.128.0.86:8080
+        weight: 100
