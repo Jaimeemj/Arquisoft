@@ -77,8 +77,8 @@ WSGI_APPLICATION = 'ofipensiones.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.environ.get("COBROS_DB", "app_db"),
-        'USER': os.environ.get("COBROS_DB_USER", "app_user"),
+        'NAME': os.environ.get("COBROS_DB", "cobros_db"),
+        'USER': os.environ.get("COBROS_DB_USER", "cobros_user"),
         'PASSWORD': os.environ.get("COBRPS_DB_PASSWORD", "isis2503"),
         'HOST': os.environ.get("COBRPS_DB_HOST", "10.128.0.82"),
         'PORT': os.environ.get("COBROS_DB_PORT", "5432")

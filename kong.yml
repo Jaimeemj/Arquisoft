@@ -1,42 +1,25 @@
-_format_version: "3.0"
-_transform: true
+_format_version: "2.1"
 
 services:
-  - name: main-page-service
-    url: http://10.128.0.90:8000
-    routes:
-      - name: main-page-route
-        paths:
-          - "/"
-
   - name: cobros-service
-    url: http://10.128.0.86:8080
+    host: cobros_upstream
+    protocol: http
     routes:
-      - name: cobros-route
+      - name: cobros
         paths:
-          - "/cobros"
+          - /cobros
+        strip_path: false
 
   - name: estudiantes-service
-    url: http://10.128.0.87:8080
+    host: estudiantes_upstream
+    protocol: http
     routes:
-      - name: estudiantes-route
+      - name: estudiantes
         paths:
-          - "/estudiantes"
+          - /estudiantes
+        strip_path: false
 
-  - name: empleados-service
-    url: http://10.128.0.85:8080
-    routes:
-      - name: empleados-route
-        paths:
-          - "/empleados"
-
-  - name: calculos-service
-    url: http://10.128.0.84:8080
-    routes:
-      - name: calculos-route
-        paths:
-          - "/calculos"
-
+  
 upstreams:
   - name: estudiantes_upstream
     targets:
