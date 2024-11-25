@@ -1,7 +1,14 @@
 FROM python:3.9-slim
+
+# Establece el directorio de trabajo
 WORKDIR /app
-COPY . /app
-RUN pip install -r requirements.txt
+
+# Copia el archivo de requisitos y lo instala
+COPY requirements.txt requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copia el resto de la aplicación
+COPY . .
+
+# Comando por defecto para ejecutar la aplicación
 CMD ["python", "app.py"]
-# Ejemplo de ejecución del contenedor:
-# docker run -d -e POSTGRES_DB=mydb -e POSTGRES_USER=myuser -e POSTGRES_PASSWORD=mypass -e MONGO_URI=mongodb://user:pass@host:port -p 8080:8080 <image_name>
