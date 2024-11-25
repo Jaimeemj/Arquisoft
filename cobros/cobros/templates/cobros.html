@@ -7,41 +7,63 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-    <h1>Lista de Cobros</h1>
-    <table border="1" id="cobros-table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Estudiante</th>
-                <th>Fecha</th>
-                <th>Monto</th>
-                <th>Pagado</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Aquí se llenarán los datos dinámicamente -->
-        </tbody>
-    </table>
+    <h1>Lista de Cobros por Estudiante</h1>
+    <div id="cobros-container">
+        <!-- Aquí se llenarán las tablas dinámicamente -->
+    </div>
     <script>
-        // Solicitar datos de CobrosList y renderizarlos en la tabla
         $(document).ready(function() {
             $.ajax({
                 url: "{% url 'lista_cobros' %}", // Cambia este nombre por el de tu URL configurada
                 method: "GET",
                 success: function(data) {
-                    let tableBody = $("#cobros-table tbody");
-                    tableBody.empty(); // Limpia la tabla antes de llenarla
+                    let cobrosPorEstudiante = {};
+
+                    // Agrupar cobros por estudiante
                     data.forEach(cobro => {
-                        tableBody.append(`
-                            <tr>
-                                <td>${cobro.id}</td>
-                                <td>${cobro.estudiante}</td>
-                                <td>${cobro.fecha}</td>
-                                <td>${cobro.monto}</td>
-                                <td>${cobro.pagado ? 'Sí' : 'No'}</td>
-                            </tr>
-                        `);
+                        if (!cobrosPorEstudiante[cobro.estudiante]) {
+                            cobrosPorEstudiante[cobro.estudiante] = [];
+                        }
+                        cobrosPorEstudiante[cobro.estudiante].push(cobro);
                     });
+
+                    let container = $("#cobros-container");
+                    container.empty(); // Limpia el contenedor antes de llenarlo
+
+                    // Crear una tabla por cada estudiante
+                    for (let estudiante in cobrosPorEstudiante) {
+                        let tableHtml = `
+                            <h2>Estudiante: ${estudiante}</h2>
+                            <table border="1" class="cobros-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Fecha</th>
+                                        <th>Monto</th>
+                                        <th>Pagado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                        `;
+
+                        cobrosPorEstudiante[estudiante].forEach(cobro => {
+                            tableHtml += `
+                                <tr>
+                                    <td>${cobro.id}</td>
+                                    <td>${cobro.fecha || 'N/A'}</td>
+                                    <td>${cobro.monto}</td>
+                                    <td>${cobro.pagado ? 'Sí' : 'No'}</td>
+                                </tr>
+                            `;
+                        });
+
+                        tableHtml += `
+                                </tbody>
+                            </table>
+                        `;
+
+                        container.append(tableHtml);
+                    }
                 },
                 error: function() {
                     alert("No se pudieron cargar los cobros.");

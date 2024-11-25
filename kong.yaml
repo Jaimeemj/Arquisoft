@@ -19,6 +19,15 @@ services:
           - /estudiantes
         strip_path: false
 
+  - name: calculos-service
+    host: calculos_upstream
+    protocol: http
+    routes:
+      - name: estudiantes
+        paths:
+          - /suma
+        strip_path: false
+
   
 upstreams:
   - name: estudiantes_upstream
@@ -29,4 +38,9 @@ upstreams:
   - name: cobros_upstream
     targets:
       - target: 10.128.0.86:8080
+        weight: 100
+
+  - name: calculos_upstream
+    targets:
+      - target: 10.128.0.84:8080
         weight: 100

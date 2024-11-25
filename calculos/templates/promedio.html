@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promedio de Cobros Pagados</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Promedio de Cobros Pagados</h1>
+    <button id="fetch-average">Mostrar Promedio</button>
+    <p id="average-display"></p>
+
+    <script>
+        $(document).ready(function () {
+            $('#fetch-average').click(function () {
+                $.ajax({
+                    url: '/promedio', // Endpoint para obtener el promedio
+                    method: 'GET',
+                    success: function (data) {
+                        $('#average-display').text(`El promedio de cobros pagados es: ${data.promedio}`);
+                    },
+                    error: function () {
+                        $('#average-display').text('Error al obtener el promedio.');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
