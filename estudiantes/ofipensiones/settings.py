@@ -80,7 +80,7 @@ DATABASES = {
         'NAME': os.getenv('ESTUDIANTES_DB', 'estudiantes_db'),
         'USER': os.getenv('ESTUDIANTES_DB_USER', 'estudiantes_user'),
         'PASSWORD': os.getenv('ESTUDIANTES_DB_PASSWORD', 'isis2503'),
-        'HOST': os.getenv('ESTUDIANTES_DB_HOST', 'localhost'),
+        'HOST': os.getenv('ESTUDIANTES_DB_HOST', '10.128.0.88'),
         'PORT': os.getenv('ESTUDIANTES_DB_PORT', '5432'),
     }
 }
