@@ -109,6 +109,33 @@ resources:
           #!/bin/bash
           docker run --restart=always -d -e POSTGRES_USER=cobros_user -e POSTGRES_DB=cobros_db -e POSTGRES_PASSWORD=isis2503 -p 5432:5432 --name cobros-db postgres
 
+- name: msd-estudiantes-db
+  type: compute.v1.instance
+  properties:
+    zone: us-central1-a
+    machineType: https://www.googleapis.com/compute/v1/projects/<id-proyecto>/zones/us-central1-a/machineTypes/e2-micro
+    disks:
+    - deviceName: boot
+      type: PERSISTENT
+      boot: true
+      autoDelete: true
+      initializeParams:
+        sourceImage: https://www.googleapis.com/compute/v1/projects/cos-cloud/global/images/cos-101-17162-463-8
+    networkInterfaces:
+    - network: https://www.googleapis.com/compute/v1/projects/<id-proyecto>/global/networks/default
+      networkIP: 10.128.0.82
+      accessConfigs:
+      - name: External NAT
+        type: ONE_TO_ONE_NAT
+    tags:
+      items: 
+      - msd-service-db
+    metadata:
+      items:
+      - key: startup-script
+        value: |
+          #!/bin/bash
+          docker run --restart=always -d -e POSTGRES_USER=estudiantes_user -e POSTGRES_DB=estudiantes_db -e POSTGRES_PASSWORD=isis2503 -p 5432:5432 --name estudiantes-db postgres
 
 - name: msd-mongo-db
   type: compute.v1.instance

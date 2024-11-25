@@ -1,22 +1,53 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Cobros de {{ estudiante.nombre }}</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Cobros</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-    <h1>Cobros de {{ estudiante.nombre }}</h1>
-    <ul>
-        {% if cobros %}
-            {% for cobro in cobros %}
-                <li>
-                    Fecha: {{ cobro.fecha }} | Monto: {{ cobro.monto }} | Pagado: {{ cobro.pagado }}
-                </li>
-            {% endfor %}
-        {% else %}
-            <li>No hay cobros para este estudiante.</li>
-        {% endif %}
-    </ul>
-
-    <a href="{% url 'estudiantes_list' %}">Volver a la lista de estudiantes</a>
+    <h1>Lista de Cobros</h1>
+    <table border="1" id="cobros-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Estudiante</th>
+                <th>Fecha</th>
+                <th>Monto</th>
+                <th>Pagado</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Aquí se llenarán los datos dinámicamente -->
+        </tbody>
+    </table>
+    <script>
+        // Solicitar datos de CobrosList y renderizarlos en la tabla
+        $(document).ready(function() {
+            $.ajax({
+                url: "{% url 'lista_cobros' %}", // Cambia este nombre por el de tu URL configurada
+                method: "GET",
+                success: function(data) {
+                    let tableBody = $("#cobros-table tbody");
+                    tableBody.empty(); // Limpia la tabla antes de llenarla
+                    data.forEach(cobro => {
+                        tableBody.append(`
+                            <tr>
+                                <td>${cobro.id}</td>
+                                <td>${cobro.estudiante}</td>
+                                <td>${cobro.fecha}</td>
+                                <td>${cobro.monto}</td>
+                                <td>${cobro.pagado ? 'Sí' : 'No'}</td>
+                            </tr>
+                        `);
+                    });
+                },
+                error: function() {
+                    alert("No se pudieron cargar los cobros.");
+                }
+            });
+        });
+    </script>
 </body>
 </html>

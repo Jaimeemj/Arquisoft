@@ -77,11 +77,11 @@ WSGI_APPLICATION = 'ofipensiones.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.getenv('APP_DB', 'app_db'),
-        'USER': os.getenv('APP_DB_USER', 'app_user'),
-        'PASSWORD': os.getenv('APP_DB_PASSWORD', 'isis2503'),
-        'HOST': os.getenv('APP_DB_HOST', '10.128.0.82'),
-        'PORT': os.getenv('APP_DB_PORT', '5432'),
+        'NAME': os.getenv('ESTUDIANTES_DB', 'estudiantes_db'),
+        'USER': os.getenv('ESTUDIANTES_DB_USER', 'estudiantes_user'),
+        'PASSWORD': os.getenv('ESTUDIANTES_DB_PASSWORD', 'isis2503'),
+        'HOST': os.getenv('ESTUDIANTES_DB_HOST', '10.128.0.82'),
+        'PORT': os.getenv('ESTUDIANTES_DB_PORT', '5432'),
     }
 }
 
@@ -128,11 +128,6 @@ STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media')
 MEDIA_URL = '/media/'
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.2/howto/static-files/
-
-STATIC_URL = '/static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

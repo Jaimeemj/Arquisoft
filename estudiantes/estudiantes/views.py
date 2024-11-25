@@ -1,29 +1,16 @@
+from .models import Estudiante
+from django.shortcuts import render, redirect
+from django.contrib import messages
 from django.http import HttpResponse
-from django.shortcuts import render
-from .logic import estudiantes_logic as vl
-from cobros.cobros.logic import cobros_logic as cl
-from django.http import HttpResponse
-from django.core import serializers
-import requests
+from django.urls import reverse
+from django.http import JsonResponse
+import json
 
-def estudiantes(request):
-    if request.method == 'GET':
-        estudiantes = vl.get_estudiantes()
-        estudiantes.dto = serializers.serialize('json', estudiantes)
-        return HttpResponse(estudiantes.dto, 'application/json')
-        
-
-def estudiantes_list(request):
-    estudiantes = vl.get_estudiantes()
-    context = {
-        'estudiantes_list': estudiantes
-    }
-    return render(request, 'estudiantes.html', context)
-
-def cobros_estudiante(request, estudiante_id):
-    estudiante = vl.get_estudiante(estudiante_id)
-    cobros = cl.get_cobros(estudiante)
-    return render(request, 'cobros.html', {'estudiante': estudiante, 'cobros': cobros})
-# Create your views here.
+def EstudiantesList(request):
+    queryset = Estudiante.objects.all()
+    context = list(queryset.values('id', 'nombre', 'apellido', 'edad', 'correo', 'estado'))
+    return JsonResponse(context, safe=False)
 
 
+def EstudiantesPage(request):
+    return render(request, 'estudiantes.html')

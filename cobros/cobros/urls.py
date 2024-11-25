@@ -3,7 +3,8 @@ from . import views
 
 urlpatterns = [
     # Otras rutas de tu aplicación
-    path('cobros/', views.lista_cobros, name='lista_cobros'),
+    path('cobros_api/', views.CobrosList, name='lista_cobros'),
+    path('cobros/', views.CobrosPage, name='cobros_page'),
     path('suma/', views.obtener_suma_total, name='obtener_suma_total'),  # Nueva ruta
 ]
 
