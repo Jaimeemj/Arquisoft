@@ -76,12 +76,12 @@ WSGI_APPLICATION = 'ofipensiones.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DB_NAME', 'estudiantes_db'),
-        'USER': os.getenv('DB_USER', 'estudiantes_user'),
-        'PASSWORD': os.getenv('DB_PASSWORD', 'estudiantes_password'),
-        'HOST': os.getenv('DB_HOST', '10.128.0.82'),
-        'PORT': os.getenv('DB_PORT', '5432'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': os.getenv('ESTUDIANTE_DB', 'estudiantes_db'),
+        'USER': os.getenv('ESTUDIANTE_DB_USER', 'estudiantes_user'),
+        'PASSWORD': os.getenv('ESTUDIANTE_DB_PASSWORD', 'isis2503'),
+        'HOST': os.getenv('ESTUDIANTE_DB_HOST', '10.128.0.82'),
+        'PORT': os.getenv('ESTUDIANTE_DB_PORT', '5432'),
     }
 }
 
@@ -137,4 +137,7 @@ STATIC_URL = '/static/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# Extra places for collectstatic to find static files.
+STATICFILES_DIRS = (
+    os.path.join(PROJECT_ROOT, 'static'),
+)

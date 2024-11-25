@@ -76,12 +76,12 @@ WSGI_APPLICATION = 'ofipensiones.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'cobros_db',
-        'USER': 'cobros_user',
-        'PASSWORD': 'cobros_password',
-        'HOST': '10.128.0.82',  # IP de la instancia PostgreSQL
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': os.environ.get("COBROS_DB", "cobros_db"),
+        'USER': os.environ.get("COBROS_DB_USER", "cobros_user"),
+        'PASSWORD': os.environ.get("COBROS_DB_PASSWD", "isis2503"),
+        'HOST': os.environ.get("COBROS_DB_HOST", "10.128.0.83"),
+        'PORT': os.environ.get("COBROS_DB_PORT", "5432")
     }
 }
 
@@ -137,4 +137,5 @@ STATIC_URL = '/static/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+PATH_API_GATEWAY = "http://" + os.environ.get("KONG_HOST", "10.128.0.81") + ":" + os.environ.get("KONG_PORT", "8000")
+PATH_EST = PATH_API_GATEWAY + "/estudiantes"
