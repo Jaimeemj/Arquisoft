@@ -23,9 +23,9 @@ services:
     host: calculos_upstream
     protocol: http
     routes:
-      - name: estudiantes
+      - name: promedio
         paths:
-          - /suma
+          - /promedio
         strip_path: false
 
   
