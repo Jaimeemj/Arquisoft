@@ -19,7 +19,7 @@ def check_estudiante(data):
 
 def CobrosList(request):
     queryset = Cobro.objects.all()
-    context = list(queryset.values('id', 'estudiante', 'fecha', 'monto', 'pagado'))
+    context = list(queryset.values('id', 'estudiante', 'monto', 'pagado'))
     return JsonResponse(context, safe=False)
 
 def CobrosPage(request):

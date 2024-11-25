@@ -215,24 +215,24 @@ resources:
       - key: startup-script
         value: |
           #!/bin/bash
-           sudo apt-get update
-        sudo apt-get install -y python3-pip git cron
+          sudo apt-get update
+          sudo apt-get install -y python3-pip git cron
 
-        # Crear directorio para el proyecto y clonar el repositorio
-        mkdir -p /home/proyecto
-        cd /home/proyecto
-        sudo git clone https://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@github.com/Camilafajardo22/Arquisoft.git
+          # Crear directorio para el proyecto y clonar el repositorio
+          mkdir -p /home/proyecto
+          cd /home/proyecto
+          sudo git clone https://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@github.com/Camilafajardo22/Arquisoft.git
 
-        # Navegar al repositorio y preparar el entorno
-        cd Arquisoft/calculos
-        pip3 install -r requirements.txt
+          # Navegar al repositorio y preparar el entorno
+          cd Arquisoft/calculos
+          pip3 install -r requirements.txt
 
-        # Configurar el cron job para ejecutar periódicamente el script
-        CRON_JOB="0 * * * * python3 /home/proyecto/Arquisoft/update_promedio.py"
-        (crontab -l 2>/dev/null; echo "$CRON_JOB") | crontab -
+          # Configurar el cron job para ejecutar periódicamente el script
+          CRON_JOB="0 * * * * python3 /home/proyecto/Arquisoft/update_promedio.py"
+          (crontab -l 2>/dev/null; echo "$CRON_JOB") | crontab -
 
-        # Reiniciar cron para aplicar los cambios
-        sudo service cron restart
+          # Reiniciar cron para aplicar los cambios
+          sudo service cron restart
   
 - name: msd-cobros-ms
   type: compute.v1.instance
