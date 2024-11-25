@@ -236,6 +236,8 @@ resources:
       - key: startup-script
         value: |
           #!/bin/bash
+          sudo apt-get update
+          sudo apt install python3-pip -y
           sudo mkdir /home/proyecto
           cd /home/proyecto
           sudo git clone https://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@github.com/Camilafajardo22/Arquisoft.git
