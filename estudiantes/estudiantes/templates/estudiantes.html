@@ -1,75 +1,54 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Estudiantes</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
-        h1 {
-            background-color: #4CAF50;
-            color: white;
-            text-align: center;
-            padding: 10px 0;
-        }
-        table {
-            width: 80%;
-            margin: 20px auto;
-            border-collapse: collapse;
-        }
-        table, th, td {
-            border: 1px solid #ddd;
-        }
-        th, td {
-            padding: 12px;
-            text-align: left;
-        }
-        th {
-            background-color: #4CAF50;
-            color: white;
-        }
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-
     <h1>Lista de Estudiantes</h1>
-
-    <table>
+    <table border="1">
         <thead>
             <tr>
+                <th>ID</th>
                 <th>Nombre</th>
+                <th>Apellido</th>
                 <th>Edad</th>
                 <th>Correo</th>
-                <th>Cronograma</th> <!-- Nueva columna para el botón -->
+                <th>Estado</th>
             </tr>
         </thead>
-        <tbody>
-            {% for estudiante in estudiantes_list %}
-            <tr>
-                <td>{{ estudiante.nombre }}</td>
-                <td>{{ estudiante.edad }}</td>
-                <td>{{ estudiante.correo }}</td>
-                <td>
-                    <form action="{% url 'cobros_estudiante' estudiante.id %}" method="get" style="display:inline;">
-                        <button type="submit">Ver Cobros</button>
-                    </form>
-                </td> <!-- Colocamos el botón dentro de su propia celda -->
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="4">No hay estudiantes disponibles.</td>
-            </tr>
-            {% endfor %}
+        <tbody id="table-body">
+            <!-- Los datos se agregarán aquí dinámicamente -->
         </tbody>
     </table>
 
+    <script>
+        $(document).ready(function() {
+            const tableBody = $("#table-body");
+            $.ajax({
+                url: "{% url 'estudiantes_list' %}",  // La URL del endpoint
+                method: "GET",
+                success: function(data) {
+                    data.forEach(estudiante => {
+                        tableBody.append(`
+                            <tr>
+                                <td>${estudiante.id}</td>
+                                <td>${estudiante.nombre}</td>
+                                <td>${estudiante.apellido}</td>
+                                <td>${estudiante.edad}</td>
+                                <td>${estudiante.correo}</td>
+                                <td>${estudiante.estado ? 'Activo' : 'Inactivo'}</td>
+                            </tr>
+                        `);
+                    });
+                },
+                error: function() {
+                    alert("No se pudieron cargar los estudiantes.");
+                }
+            });
+        });
+    </script>
 </body>
 </html>
