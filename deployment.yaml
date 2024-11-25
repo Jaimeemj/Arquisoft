@@ -73,7 +73,7 @@ resources:
           sudo mkdir /home/labs
           cd /home/labs
           sudo git clone https://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@github.com/Camilafajardo22/Arquisoft.git
-          cd ISIS2503-Microservices-AppDjango
+          cd Arquisoft
           docker network create kong-net
           docker run -d --name kong --network=kong-net --restart=always \
           -v "$(pwd):/kong/declarative/" -e "KONG_DATABASE=off" \
@@ -107,7 +107,7 @@ resources:
       - key: startup-script
         value: |
           #!/bin/bash
-          docker run --restart=always -d -e POSTGRES_USER=app_user -e POSTGRES_DB=app_db -e POSTGRES_PASSWORD=app_password -p 5432:5432 --name postgres-db postgres
+          docker run --restart=always -d -e POSTGRES_USER=app_user -e POSTGRES_DB=app_db -e POSTGRES_PASSWORD=isis2503 -p 5432:5432 --name postgres-db postgres
 
 - name: msd-mongo-db
   type: compute.v1.instance
