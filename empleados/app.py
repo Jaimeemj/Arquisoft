@@ -23,5 +23,6 @@ def empleados_vista():
     return render_template('empleados.html')
 
 
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)

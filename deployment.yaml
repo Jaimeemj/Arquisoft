@@ -3,7 +3,7 @@ resources:
 - name: msd-api-gateway
   type: compute.v1.firewall
   properties:
-    network: https://www.googleapis.com/compute/v1/projects/sprint4-442722/global/networks/default
+    network: https://www.googleapis.com/compute/v1/projects/talleres-439904/global/networks/default
     priority: 1000
     direction: INGRESS
     sourceRanges:
@@ -17,7 +17,7 @@ resources:
 - name: msd-services-apps
   type: compute.v1.firewall
   properties:
-    network: https://www.googleapis.com/compute/v1/projects/sprint4-442722/global/networks/default
+    network: https://www.googleapis.com/compute/v1/projects/talleres-439904/global/networks/default
     priority: 1000
     direction: INGRESS
     sourceTags:
@@ -31,7 +31,7 @@ resources:
 - name: msd-service-db
   type: compute.v1.firewall
   properties:
-    network: https://www.googleapis.com/compute/v1/projects/sprint4-442722/global/networks/default
+    network: https://www.googleapis.com/compute/v1/projects/talleres-439904/global/networks/default
     priority: 1000
     direction: INGRESS
     sourceTags:
@@ -46,7 +46,7 @@ resources:
 - name: nosqld-firewall-mongo
   type: compute.v1.firewall
   properties:
-    network: https://www.googleapis.com/compute/v1/projects/sprint4-442722/global/networks/default
+    network: https://www.googleapis.com/compute/v1/projects/talleres-439904/global/networks/default
     priority: 1000
     direction: INGRESS
     sourceTags: 
@@ -63,7 +63,7 @@ resources:
   type: compute.v1.instance
   properties:
     zone: us-central1-a
-    machineType: https://www.googleapis.com/compute/v1/projects/sprint4-442722/zones/us-central1-a/machineTypes/e2-micro
+    machineType: https://www.googleapis.com/compute/v1/projects/talleres-439904/zones/us-central1-a/machineTypes/e2-micro
     disks:
     - deviceName: boot
       type: PERSISTENT
@@ -72,7 +72,7 @@ resources:
       initializeParams:
         sourceImage: https://www.googleapis.com/compute/v1/projects/cos-cloud/global/images/cos-101-17162-463-8
     networkInterfaces:
-    - network: https://www.googleapis.com/compute/v1/projects/sprint4-442722/global/networks/default
+    - network: https://www.googleapis.com/compute/v1/projects/talleres-439904/global/networks/default
       networkIP: 10.128.0.81
       accessConfigs:
       - name: External NAT
@@ -96,39 +96,12 @@ resources:
           -p 8000:8000 kong/kong-gateway
 
 # Database instances
-- name: msd-cobros-db
-  type: compute.v1.instance
-  properties:
-    zone: us-central1-a
-    machineType: https://www.googleapis.com/compute/v1/projects/sprint4-442722/zones/us-central1-a/machineTypes/e2-micro
-    disks:
-    - deviceName: boot
-      type: PERSISTENT
-      boot: true
-      autoDelete: true
-      initializeParams:
-        sourceImage: https://www.googleapis.com/compute/v1/projects/cos-cloud/global/images/cos-101-17162-463-8
-    networkInterfaces:
-    - network: https://www.googleapis.com/compute/v1/projects/sprint4-442722/global/networks/default
-      networkIP: 10.128.0.82
-      accessConfigs:
-      - name: External NAT
-        type: ONE_TO_ONE_NAT
-    tags:
-      items:
-      - msd-service-db
-    metadata:
-      items:
-      - key: startup-script
-        value: |
-          #!/bin/bash
-          docker run --restart=always -d -e POSTGRES_USER=cobros_user -e POSTGRES_DB=cobros_db -e POSTGRES_PASSWORD=isis2503 -p 5432:5432 --name cobros-db postgres
 
-- name: msd-estudiantes-db
+- name: msd-usuarios-db
   type: compute.v1.instance
   properties:
     zone: us-central1-a
-    machineType: https://www.googleapis.com/compute/v1/projects/sprint4-442722/zones/us-central1-a/machineTypes/e2-micro
+    machineType: https://www.googleapis.com/compute/v1/projects/talleres-439904/zones/us-central1-a/machineTypes/e2-micro
     disks:
     - deviceName: boot
       type: PERSISTENT
@@ -137,7 +110,7 @@ resources:
       initializeParams:
         sourceImage: https://www.googleapis.com/compute/v1/projects/cos-cloud/global/images/cos-101-17162-463-8
     networkInterfaces:
-    - network: https://www.googleapis.com/compute/v1/projects/sprint4-442722/global/networks/default
+    - network: https://www.googleapis.com/compute/v1/projects/talleres-439904/global/networks/default
       networkIP: 10.128.0.88
       accessConfigs:
       - name: External NAT
@@ -152,36 +125,12 @@ resources:
           #!/bin/bash
           docker run --restart=always -d -e POSTGRES_USER=estudiantes_user -e POSTGRES_DB=estudiantes_db -e POSTGRES_PASSWORD=isis2503 -p 5432:5432 --name estudiantes-db postgres
 
-
-- type: compute.v1.instance
-  name: nosqld-mongo-instance
-  properties:
-    zone: us-central1-a
-    machineType: https://www.googleapis.com/compute/v1/projects/sprint4-442722/zones/us-central1-a/machineTypes/e2-micro
-    disks:
-    - deviceName: boot
-      type: PERSISTENT
-      boot: true
-      autoDelete: true
-      initializeParams:
-        sourceImage: https://www.googleapis.com/compute/v1/projects/cos-cloud/global/images/cos-101-17162-386-64
-    networkInterfaces:
-    - network: https://www.googleapis.com/compute/v1/projects/sprint4-442722/global/networks/default
-      networkIP: 10.128.0.83
-      accessConfigs:
-      - name: External NAT
-        type: ONE_TO_ONE_NAT
-    tags:
-      items: 
-      - nosqld-mongo
-
-
-# Service instances
-- name: msd-calculos-ms
+#microservicios
+- name: msd-usuarios-ms
   type: compute.v1.instance
   properties:
     zone: us-central1-a
-    machineType: https://www.googleapis.com/compute/v1/projects/sprint4-442722/zones/us-central1-a/machineTypes/e2-micro
+    machineType: https://www.googleapis.com/compute/v1/projects/talleres-439904/zones/us-central1-a/machineTypes/e2-micro
     disks:
     - deviceName: boot
       type: PERSISTENT
@@ -190,88 +139,7 @@ resources:
       initializeParams:
         sourceImage: https://www.googleapis.com/compute/v1/projects/ubuntu-os-cloud/global/images/ubuntu-2004-focal-v20240307b
     networkInterfaces:
-    - network: https://www.googleapis.com/compute/v1/projects/sprint4-442722/global/networks/default
-      networkIP: 10.128.0.84
-      accessConfigs:
-      - name: External NAT
-        type: ONE_TO_ONE_NAT
-    tags:
-      items:
-      - msd-services-firewall
-    metadata:
-      items:
-      - key: startup-script
-        value: |
-          #!/bin/bash
-          sudo apt-get update
-          sudo apt-get install -y python3-pip git cron
-
-          # Crear directorio para el proyecto y clonar el repositorio
-          mkdir -p /home/proyecto
-          cd /home/proyecto
-          sudo git clone https://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@github.com/Camilafajardo22/Arquisoft.git
-
-          # Navegar al repositorio y preparar el entorno
-          cd Arquisoft/calculos
-          pip3 install -r requirements.txt
-
-          # Configurar el cron job para ejecutar periódicamente el script
-          CRON_JOB="0 * * * * python3 /home/proyecto/Arquisoft/update_promedio.py"
-          (crontab -l 2>/dev/null; echo "$CRON_JOB") | crontab -
-
-          # Reiniciar cron para aplicar los cambios
-          sudo service cron restart
-  
-- name: msd-cobros-ms
-  type: compute.v1.instance
-  properties:
-    zone: us-central1-a
-    machineType: https://www.googleapis.com/compute/v1/projects/sprint4-442722/zones/us-central1-a/machineTypes/e2-micro
-    disks:
-    - deviceName: boot
-      type: PERSISTENT
-      boot: true
-      autoDelete: true
-      initializeParams:
-        sourceImage: https://www.googleapis.com/compute/v1/projects/ubuntu-os-cloud/global/images/ubuntu-2004-focal-v20240307b
-    networkInterfaces:
-    - network: https://www.googleapis.com/compute/v1/projects/sprint4-442722/global/networks/default
-      networkIP: 10.128.0.86
-      accessConfigs:
-      - name: External NAT
-        type: ONE_TO_ONE_NAT
-    tags:
-      items:
-      - msd-services-firewall
-    metadata:
-      items:
-      - key: startup-script
-        value: |
-          #!/bin/bash
-          sudo apt-get update
-          sudo apt install python3-pip -y
-          sudo mkdir /home/proyecto
-          cd /home/proyecto
-          sudo git clone https://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@github.com/Camilafajardo22/Arquisoft.git
-          cd Arquisoft/cobros
-          sudo pip3 install -r requirements.txt
-          sudo python3 manage.py makemigrations
-          sudo python3 manage.py migrate
-
-- name: msd-estudiantes-ms
-  type: compute.v1.instance
-  properties:
-    zone: us-central1-a
-    machineType: https://www.googleapis.com/compute/v1/projects/sprint4-442722/zones/us-central1-a/machineTypes/e2-micro
-    disks:
-    - deviceName: boot
-      type: PERSISTENT
-      boot: true
-      autoDelete: true
-      initializeParams:
-        sourceImage: https://www.googleapis.com/compute/v1/projects/ubuntu-os-cloud/global/images/ubuntu-2004-focal-v20240307b
-    networkInterfaces:
-    - network: https://www.googleapis.com/compute/v1/projects/sprint4-442722/global/networks/default
+    - network: https://www.googleapis.com/compute/v1/projects/talleres-439904/global/networks/default
       networkIP: 10.128.0.87
       accessConfigs:
       - name: External NAT
@@ -282,15 +150,18 @@ resources:
     metadata:
       items:
       - key: startup-script
-        value: |
-          #!/bin/bash
-          sudo apt-get update
-          sudo apt install python3-pip -y
-          sudo mkdir /home/proyecto
-          cd /home/proyecto
-          sudo git clone https://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@github.com/Camilafajardo22/Arquisoft.git
-          cd Arquisoft/estudiantes
-          sudo pip3 install -r requirements.txt
-          sudo python3 manage.py makemigrations
-          sudo python3 manage.py migrate
+      value: |
+        #!/bin/bash
+        sudo apt-get update
+        sudo apt install python3-pip -y
+        sudo mkdir /home/proyecto
+        cd /home/proyecto
+        sudo git clone https://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@github.com/Camilafajardo22/Arquisoft.git
+        cd Arquisoft/empleados 
 
+        # Create and activate a virtual environment
+        python3 -m venv venv
+        source venv/bin/activate
+
+        # Install the requirements 
+        pip3 install -r requirements.txt   
